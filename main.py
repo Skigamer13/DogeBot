@@ -18,8 +18,6 @@ bot = commands.Bot(command_prefix="D$", case_insensitive=True)
 
 bot.owner_id = 836449409226637313
 
-client = discord.Client()
-
 sus_words = []
 
 starter_encouragements = []
@@ -28,49 +26,17 @@ if "responding" not in db.keys():
     db["responding"] = True
 
 
-@client.event
-async def on_ready():
-    print("We have logged in as {0.user}".format(client))
+@bot.command()
+async def hello(ctx):
+    await ctx.send(
+        'Hiya there! I am DogeBot™, An automated Python based program designed to send users to "Horny Jail"! Thank you for adding me to your server! I hope I can enjoy my stay, and remember, dont get Bonked!'
+    )
 
 
-@client.event
-async def on_message(message):
-    if message.startswith('D$greet'):
-        channel = message.channel
-        await channel.send('Say hello!')
-
-        def check(m):
-            return m.content == 'hello' and m.channel == channel
-
-        msg = await client.wait_for('message', check=check)
-        await channel.send('Hello {.author}!'.format(msg))
-
-    if message.author == client.user:
-        return
-
-        msg = message.content
-
-    if msg.startswith("D$hello"):
-        await message.channel.send(
-            'Hiya there! I am DogeBot™, An automated Python based program designed to send users to "Horny Jail"! Thank you for adding me to your server! I hope I can enjoy my stay, and remember, dont get Bonked!'
-        )
-
-    if msg.startswith("D$bonk"):
-        await message.channel.send(file=discord.File('DogeBot.jpg'))
-
-        if any(word in msg for word in sus_words):
-            await message.channel.send(file=discord.File('DogeBot.jpg'))
-
-    if msg.startswith("D$responding"):
-        value = msg.split("$responding ", 1)[1]
-
-        if value.lower() == "true":
-            db["responding"] = True
-            await message.channel.send("Responding is on.")
-        else:
-            db["responding"] = False
-            await message.channel.send("Responding is off.")
+@bot.command()
+async def bonk(ctx):
+    await ctx.send(file=discord.File('DogeBot.jpg'))
 
 
 keep_alive()
-client.run(os.getenv("TOKEN"))
+bot.run(os.getenv("TOKEN"))
