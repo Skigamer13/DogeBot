@@ -16,6 +16,8 @@ logger.addHandler(handler)
 
 bot = commands.Bot(command_prefix="D$", case_insensitive=True)
 
+bot.owner_id = 836449409226637313
+
 client = discord.Client()
 
 sus_words = []
