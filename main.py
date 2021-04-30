@@ -10,13 +10,13 @@ bot = commands.Bot(command_prefix="D$", case_insensitive=True)
 
 def is_owner():
     async def predicate(ctx):
-        return ctx.author.id == 836449409226637313
+        return ctx.author.id == 597467552079282186
 
-    return commands.check(predicate)
+        return commands.check(predicate)
 
 
 @bot.command()
-@is_owner()
+@commands.is_owner()
 async def secretownercommand(ctx):
     await ctx.send('Hello Maker!')
 
