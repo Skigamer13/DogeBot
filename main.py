@@ -1,8 +1,8 @@
 from keep_alive import keep_alive
 import discord
 import os
-import logging
 import random
+import logging
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix="D$", case_insensitive=True)
