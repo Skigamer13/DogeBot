@@ -1,20 +1,30 @@
 from keep_alive import keep_alive
 import discord
 import os
-from replit import db
-from discord.ext import commands
 import logging
+import random
+from discord.ext import commands
 
 bot = commands.Bot(command_prefix="D$", case_insensitive=True)
 
-bot.owner_id = 836449409226637313
 
-sus_words = []
+def is_owner():
+    async def predicate(ctx):
+        return ctx.author.id == 836449409226637313
 
-starter_encouragements = []
+    return commands.check(predicate)
 
-if "responding" not in db.keys():
-    db["responding"] = True
+
+@bot.command()
+@is_owner()
+async def secretownercommand(ctx):
+    await ctx.send('Hello Maker!')
+
+
+@secretownercommand.error
+async def secretownercommand_error(ctx, error):
+    if isinstance(error, commands.CheckFailure):
+        await ctx.send('Nothing to see here friend.')
 
 
 @bot.command()
@@ -27,6 +37,28 @@ async def hello(ctx):
 @bot.command()
 async def bonk(ctx):
     await ctx.send(file=discord.File('DogeBot.jpg'))
+
+
+@bot.command()
+async def member(ctx, *, member: discord.Member):
+    await ctx.send('{0} joined on {0.joined_at}'.format(member))
+
+
+@bot.command()
+async def add(ctx, a: int, b: int):
+    await ctx.send(a + b)
+
+
+@bot.command()
+async def roll(ctx, dice: str):
+    try:
+        rolls, limit = map(int, dice.split('d'))
+    except Exception:
+        await ctx.send('Format has to be in NdN!')
+        return
+
+    result = ', '.join(str(random.randint(1, limit)) for r in range(rolls))
+    await ctx.send(result)
 
 
 logger = logging.getLogger('discord')
