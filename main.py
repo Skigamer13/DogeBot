@@ -17,12 +17,12 @@ def is_owner():
 
 @bot.command()
 @commands.is_owner()
-async def secretownercommand(ctx):
+async def secret(ctx):
     await ctx.send('Hello Maker!')
 
 
-@secretownercommand.error
-async def secretownercommand_error(ctx, error):
+@secret.error
+async def secret_error(ctx, error):
     if isinstance(error, commands.CheckFailure):
         await ctx.send('Nothing to see here friend.')
 
