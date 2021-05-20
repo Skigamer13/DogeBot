@@ -37,12 +37,12 @@ async def hello(ctx):
 keyword = "bonk"
 
 
-@bot.event
-async def on_message(ctx):
-    message_text = ctx.content.strip().upper()
+@bot.listen('on_message')
+async def on_message(message):
+    message_text = message.content.strip().upper()
     if keyword in message_text:
-        await ctx.send_message(file=discord.File('DogeBot.jpg').format(keyword)
-                               )
+        await message.send_message(
+            file=discord.File('DogeBot.jpg').format(keyword))
 
 
 @bot.command()
